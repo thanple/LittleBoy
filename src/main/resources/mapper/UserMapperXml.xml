@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ledo.alpha.web.mapper.UserMapperXml" >
+<mapper namespace="com.thanple.little.boy.web.mapper.UserMapperXml" >
 
     <!-- 数据库表的名字-->
     <sql id="tableName">user</sql>
 
 
-    <resultMap id="BaseResultMap" type="com.ledo.alpha.web.entity.repo.User" >
+    <resultMap id="BaseResultMap" type="com.thanple.little.boy.web.entity.repo.User" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="email" property="email" jdbcType="VARCHAR" />

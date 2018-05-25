@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ledo.alpha</groupId>
+    <groupId>com.thanple.little.boy</groupId>
     <artifactId>LittleBoy</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -155,7 +155,7 @@
     <!--
     打包命令demo
     1. mvn clean package -Dmaven.test.skip=true -Pproduct    -P后面的是环境(dev,test,product)
-    2. java -jar target/LittleBoy.jar -cp com.ledo.alpha.main.Main
+    2. java -jar target/LittleBoy.jar -cp Main
     -->
     <build>
         <finalName>LittleBoy</finalName>
