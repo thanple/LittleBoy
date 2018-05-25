@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ledo.alpha.web.mapper.UserMapperXml" >
+
+    <!-- 数据库表的名字-->
+    <sql id="tableName">user</sql>
+
+
+    <resultMap id="BaseResultMap" type="com.ledo.alpha.web.entity.repo.User" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+    </resultMap>
+
+
+    <sql id="columnsToInsert">
+        `name`,`email`,`create_time`
+    </sql>
+    <sql id="valuesToInsert">
+        #{pojo.name,jdbcType=VARCHAR},#{pojo.email,jdbcType=VARCHAR},#{pojo.createTime,jdbcType=DATE}
+    </sql>
+    <insert id="insert">
+        insert into <include refid="tableName"/>(<include refid="columnsToInsert"/>) values(<include refid="valuesToInsert"/>)
+    </insert>
+
+    <select id="find" resultMap="BaseResultMap">
+        select *
+        from <include refid="tableName"/>
+    </select>
+</mapper>
