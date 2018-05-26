@@ -2,13 +2,7 @@ package com.thanple.little.boy.websocket.redis;
 
 import redis.clients.jedis.Jedis;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Thanple on 2018/5/25.
@@ -64,14 +58,16 @@ public class JedisAccessImpl implements JedisAccess {
         return resStr;
     }
 
-    @SuppressWarnings("unchecked")
-    public <V> V get(String key) {
+
+    @Override
+    public <V> V get(Class<V> classz, String key) {
         Jedis jedis = getJedisInstance();
         byte[] result = jedis.get(RedisConfig.getSerializer().serialize(key));
         if(autoRelease){
             jedis.close();
         }
-        return (V)RedisConfig.getSerializer().deserialize(result);
+
+        return RedisConfig.getSerializer(classz).deserialize(result);
     }
 
     private static byte[][] convertToByteArray(Object ...value) {
@@ -104,21 +100,21 @@ public class JedisAccessImpl implements JedisAccess {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+
     @Override
-    public <V> List<V> range(String key, long start, long end) {
+    public <V> List<V> range(Class<V> classz, String key, long start, long end) {
         Jedis jedis = getJedisInstance();
 
         List<byte[]> bytesResult = jedis.lrange(RedisConfig.getSerializer().serialize(key),start,end);
         if(autoRelease){
             jedis.close();
         }
-        List<Object> result = new ArrayList<>(bytesResult.size());
+        List<V> result = new ArrayList<>(bytesResult.size());
         for(int i=0; i<bytesResult.size() ;i++) {
             byte[] bytes = bytesResult.get(i);
-            result.add(RedisConfig.getSerializer().deserialize(bytes));
+            result.add(RedisConfig.<V>getSerializer(classz).deserialize(bytes));
         }
-        return (List<V>)result;
+        return result;
     }
 
     @Override
@@ -132,16 +128,14 @@ public class JedisAccessImpl implements JedisAccess {
         return result;
     }
 
-
-    @SuppressWarnings("unchecked")
     @Override
-    public <V> V hashGet(String key, Object hashKey) {
+    public <V> V hashGet(Class<V> classz, String key, Object hashKey) {
         Jedis jedis = getJedisInstance();
         byte[] result = jedis.hget(RedisConfig.getSerializer().serialize(key) , RedisConfig.getSerializer().serialize(hashKey));
         if(autoRelease){
             jedis.close();
         }
-        return (V)RedisConfig.getSerializer().deserialize(result);
+        return RedisConfig.<V>getSerializer(classz).deserialize(result);
     }
 
     @Override
@@ -181,22 +175,21 @@ public class JedisAccessImpl implements JedisAccess {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
+
     @Override
-    public <V> Set<V> zsetRange(String key, long start, long end) {
+    public <V> Set<V> zsetRange(Class<V> classz,String key, long start, long end) {
         Jedis jedis = getJedisInstance();
 
         Iterator<byte[]> bytesResultIt = jedis.zrange(RedisConfig.getSerializer().serialize(key),start,end).iterator();
         if(autoRelease){
             jedis.close();
         }
-        Set<Object> result = new LinkedHashSet<Object>();
+        Set<V> result = new LinkedHashSet<V>();
         while(bytesResultIt.hasNext()) {
             byte[] bytes = bytesResultIt.next();
-            result.add(RedisConfig.getSerializer().deserialize(bytes));
+            result.add(RedisConfig.getSerializer(classz).deserialize(bytes));
         }
-        return (Set<V>)result;
+        return result;
     }
-
 
 }

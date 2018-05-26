@@ -1,8 +1,6 @@
 package com.thanple.little.boy.web.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thanple.little.boy.web.entity.msg.RedisPubMsg;
 import com.thanple.little.boy.web.redis.Receiver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -88,11 +86,14 @@ public class RedisConfig {
     }
 
     public static RedisSerializer getSerializer(){
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+        return getSerializer(Object.class);
+    }
+    public static <T>RedisSerializer<T> getSerializer(Class<T> classz){
+        Jackson2JsonRedisSerializer<T> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<T>(classz);
+//        ObjectMapper om = new ObjectMapper();
+//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+//        jackson2JsonRedisSerializer.setObjectMapper(om);
         return jackson2JsonRedisSerializer;
     }
 
@@ -112,7 +113,7 @@ public class RedisConfig {
     @Bean
     MessageListenerAdapter listenerAdapter(Receiver receiver){
         MessageListenerAdapter adapter = new MessageListenerAdapter(receiver, "receiveMessage");
-        adapter.setSerializer(getSerializer());     //这里自定义序列化
+        adapter.setSerializer(getSerializer(RedisPubMsg.class));     //这里自定义序列化
         return adapter;
     }
 

@@ -27,16 +27,16 @@ public interface JedisAccess {
 
     //string
     String set(String key, Object value);
-    <V> V get(String key);
+    <V> V get(Class<V> classz, String key);
 
     //list
     long leftPush(String key, Object ... value);
     long rightPush(String key, Object ...value);
-    <V> List<V> range(String key, long start, long end);
+    <V> List<V> range(Class<V> classz, String key, long start, long end);
 
     //hash
     long hash(String key, Object hashKey, Object hashValue);
-    <V> V hashGet(String key, Object hashKey);
+    <V> V hashGet(Class<V> classz, String key, Object hashKey);
 
     //set
     long setAdd(String key, Object ...value);
@@ -44,5 +44,5 @@ public interface JedisAccess {
 
     //zset
     long zset(String key,  Map<Object,Double> value);
-    <V> Set<V> zsetRange(String key, long start, long end);
+    <V> Set<V> zsetRange(Class<V> classz, String key, long start, long end);
 }

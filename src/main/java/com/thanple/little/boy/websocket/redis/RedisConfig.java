@@ -1,8 +1,5 @@
 package com.thanple.little.boy.websocket.redis;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thanple.little.boy.websocket.util.Constant;
 import com.thanple.little.boy.websocket.util.PropertiesLoader;
 import lombok.Data;
@@ -29,14 +26,18 @@ public class RedisConfig {
      * Redis序列化方式：采用jackson2JsonRedisSerializer
      * @return
      */
-    public static RedisSerializer getSerializer(){
-        RedisSerializer<Object> jackson2JsonRedisSerializer = new RedisSerializer<Object>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+    public static <T> RedisSerializer<T> getSerializer(Class<T> classz){
+        RedisSerializer<T> jackson2JsonRedisSerializer = new RedisSerializer<T>(classz);
+//        ObjectMapper om = new ObjectMapper();
+//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+//        jackson2JsonRedisSerializer.setObjectMapper(om);
         return jackson2JsonRedisSerializer;
     }
+    public static RedisSerializer getSerializer(){
+        return getSerializer(Object.class);
+    }
+
 
     /**
      * 获得一个JedisPool的配置对象
