@@ -65,17 +65,18 @@ public class RedisAccessTest {
     @Test
     public void testString(){
 
-        Assert.assertEquals(redisAccess,redisAccessObject);
-
-        redisAccess.set("testString","tom");
-        String name = redisAccess.get("testString");
-        Assert.assertEquals(name,"tom");
+        //这里必须不能一样，设置成多例模式
+        Assert.assertNotEquals(redisAccess,redisAccessObject);
 
         ObjectClass1 obj1 = new ObjectClass1(100,"Tommy");
         redisAccessObject.setClassType(ObjectClass1.class);
         redisAccessObject.set("testObject",obj1);
         ObjectClass1 obj11 = redisAccessObject.get("testObject");
         Assert.assertEquals(obj1 , obj11);
+
+        redisAccess.set("testString","tom");
+        String name = redisAccess.get("testString");
+        Assert.assertEquals(name,"tom");
     }
 
     @Data

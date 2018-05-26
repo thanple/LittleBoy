@@ -1,6 +1,7 @@
 package com.thanple.little.boy.web.redis;
 
 import com.thanple.little.boy.web.config.RedisConfig;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -12,8 +13,11 @@ import java.util.Set;
 
 /**
  * Created by Thanple on 2018/5/11.
+ * 这里设置成多例的原因是：redisTemplate如果使用了setClassType方法，会默认一种序列化Class，如果下次用忘了设置，那就不再是默认的Object.class
+ * 因此，RedisTemplate也设置成多例
  */
 @Service
+@Scope("prototype")
 public class RedisAccessImpl<V> implements RedisAccess<V> {
     @Resource
     private RedisTemplate<String, V> redisTemplate;

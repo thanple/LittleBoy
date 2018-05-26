@@ -9,6 +9,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -71,6 +72,7 @@ public class RedisConfig {
      * @return
      */
     @Bean
+    @Scope("prototype") //多例原因见 RedisAccessImpl
     public RedisTemplate<String ,Object> redisTemplate(RedisConnectionFactory factory){
         RedisSerializer<Object> jackson2JsonRedisSerializer = getSerializer();
 
