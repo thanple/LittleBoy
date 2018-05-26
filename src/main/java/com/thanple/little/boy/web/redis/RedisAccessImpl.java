@@ -25,9 +25,11 @@ public class RedisAccessImpl<V> implements RedisAccess<V> {
         this.javaType = classz;
     }
 
+
     @Override
     public RedisTemplate<String, V> getRedisTemplate() {
-        if(null != javaType) {
+        if(javaType != null) {
+            //需要重新设置一遍序列化，因为动态序列化对象需要Class
             RedisSerializer<V> jackson2JsonRedisSerializer = RedisConfig.getSerializer(javaType);
             redisTemplate.setKeySerializer(jackson2JsonRedisSerializer);
             redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);

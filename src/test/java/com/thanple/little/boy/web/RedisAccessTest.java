@@ -64,6 +64,9 @@ public class RedisAccessTest {
      */
     @Test
     public void testString(){
+
+        Assert.assertEquals(redisAccess,redisAccessObject);
+
         redisAccess.set("testString","tom");
         String name = redisAccess.get("testString");
         Assert.assertEquals(name,"tom");
