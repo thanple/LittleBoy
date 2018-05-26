@@ -1,0 +1,7 @@
+option java_package = "com.thanple.little.boy.websocket.encode.protobuff";
+option java_outer_classname="_GameServerCMsg";
+
+message GameServerCMsg {
+    required int32 id = 1;
+    required bytes msg = 2;
+}

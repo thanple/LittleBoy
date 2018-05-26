@@ -28,7 +28,7 @@ import java.util.List;
 @org.springframework.boot.test.context.SpringBootTest
 public class RedisConcurrentTest {
 
-    private Logger log = LoggerFactory.getLogger(RedisConcurrentTest.class);
+    private static Logger log = LoggerFactory.getLogger(RedisConcurrentTest.class);
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;

@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class RedisConcurrentClient {
 
-    private Logger log = LoggerFactory.getLogger(RedisConcurrentClient.class);
+    private static Logger log = LoggerFactory.getLogger(RedisConcurrentClient.class);
 
     private static int maxCount = 0;
 

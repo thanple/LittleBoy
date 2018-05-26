@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 @RunWith(SpringRunner.class)
 @org.springframework.boot.test.context.SpringBootTest
 public class RedisPublicMsgTest {
-    private Logger log = LoggerFactory.getLogger(RedisPublicMsgTest.class);
+    private static Logger log = LoggerFactory.getLogger(RedisPublicMsgTest.class);
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;

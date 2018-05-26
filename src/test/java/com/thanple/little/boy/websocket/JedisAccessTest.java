@@ -25,7 +25,7 @@ import java.util.*;
  */
 public class JedisAccessTest {
 
-    private Logger log = LoggerFactory.getLogger(JedisAccessTest.class);
+    private static Logger log = LoggerFactory.getLogger(JedisAccessTest.class);
     private JedisAccess jedisAccess = JedisAccessFactory.getJedisAccess();
 
 

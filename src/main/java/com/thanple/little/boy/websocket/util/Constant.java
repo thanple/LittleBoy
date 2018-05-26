@@ -7,7 +7,11 @@ package com.thanple.little.boy.websocket.util;
 public class Constant {
 
     public static class Path {
+        //本工程的目录
+        public static final String ROOT_PATH = System.getProperty("user.dir");
+
         public static final String websocket_redis_properties = "websocket.redis.properties";
+        public static final String websocket_sever_properties = "websocket.server.properties";
     }
 
 
@@ -22,6 +26,10 @@ public class Constant {
         public static String min_idle = "redis.minIdle";
         public static String max_wait_millis = "redis.maxWaitMillis";
         public static String test_on_borrow = "redis.testOnBorrow";
+    }
+
+    public static class WebSocketServer {
+        public static final String netty_port = "netty.port";
     }
 
 }
