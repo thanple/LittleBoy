@@ -1,6 +1,9 @@
 package com.thanple.little.boy.web;
 
 import com.thanple.little.boy.web.redis.RedisAccess;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +27,10 @@ import java.util.Set;
 public class RedisAccessTest {
 
     @Autowired
-    private RedisAccess redisAccess;
+    private RedisAccess<String> redisAccess;
+
+    @Autowired
+    private RedisAccess<ObjectClass1> redisAccessObject;
 
     /**
      * 测试string类型
@@ -59,8 +65,22 @@ public class RedisAccessTest {
     @Test
     public void testString(){
         redisAccess.set("testString","tom");
-        String name = redisAccess.<String>get("testString");
+        String name = redisAccess.get("testString");
         Assert.assertEquals(name,"tom");
+
+        ObjectClass1 obj1 = new ObjectClass1(100,"Tommy");
+        redisAccessObject.setClassType(ObjectClass1.class);
+        redisAccessObject.set("testObject",obj1);
+        ObjectClass1 obj11 = redisAccessObject.get("testObject");
+        Assert.assertEquals(obj1 , obj11);
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ObjectClass1{
+        private int id;
+        private String name;
     }
 
     /**
@@ -90,7 +110,7 @@ public class RedisAccessTest {
         redisAccess.rightPush("testList","Cindy");
         redisAccess.leftPush("testList","Tommy");
 
-        List<String> result = redisAccess.<String>range("testList",0,-1);
+        List<String> result = redisAccess.range("testList",0,-1);
         Assert.assertEquals(result.get(0),"Tommy");
         Assert.assertEquals(result.get(1),"Tim");
         Assert.assertEquals(result.get(2),"Cindy");
@@ -180,10 +200,10 @@ public class RedisAccessTest {
         redisAccess.getRedisTemplate().delete("testZSet");
 
         //这里根据后面的权值排序，9.2 < 9.6 < 9.7
-        ZSetOperations.TypedTuple<Object> objectTypedTuple1 = new DefaultTypedTuple<Object>("zset-1",9.6);
-        ZSetOperations.TypedTuple<Object> objectTypedTuple2 = new DefaultTypedTuple<Object>("zset-2",9.2);
-        ZSetOperations.TypedTuple<Object> objectTypedTuple3 = new DefaultTypedTuple<Object>("zset-3",9.7);
-        Set<ZSetOperations.TypedTuple<Object>> tuples = new HashSet<ZSetOperations.TypedTuple<Object>>();
+        ZSetOperations.TypedTuple<String> objectTypedTuple1 = new DefaultTypedTuple<String>("zset-1",9.6);
+        ZSetOperations.TypedTuple<String> objectTypedTuple2 = new DefaultTypedTuple<String>("zset-2",9.2);
+        ZSetOperations.TypedTuple<String> objectTypedTuple3 = new DefaultTypedTuple<String>("zset-3",9.7);
+        Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<ZSetOperations.TypedTuple<String>>();
         tuples.add(objectTypedTuple1);
         tuples.add(objectTypedTuple2);
         tuples.add(objectTypedTuple3);
