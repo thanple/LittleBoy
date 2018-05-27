@@ -1,0 +1,69 @@
+
+
+
+
+
+
+
+
+<!-- 这个html文件没有任何后台，只是一个前端，如果用的是IDEA开发工具，会看到右边有一大堆浏览器可以选择，随便选择一个打开即可 -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Socket</title>
+    <script type="text/javascript">
+        var websocket;
+
+        //如果浏览器支持WebSocket
+        var webSocketSeverAddr = "ws://localhost:18080/ws";
+        if ('WebSocket' in window) {
+            websocket = new WebSocket(webSocketSeverAddr);
+        } else if ('MozWebSocket' in window) {
+            websocket = new MozWebSocket(webSocketSeverAddr);
+        } else {
+            websocket = new SockJS(webSocketSeverAddr);
+        }
+
+        //当有消息过来的时候触发
+        websocket.onmessage = function(event){
+            var respMessage = document.getElementById("respMessage");
+            respMessage.value = respMessage.value + "\n" + event.data;
+        }
+
+        //连接关闭的时候触发
+        websocket.onclose = function(event){
+            var respMessage = document.getElementById("respMessage");
+            respMessage.value = respMessage.value + "\n断开连接";
+        }
+
+        //连接打开的时候触发
+        websocket.onopen = function(event){
+            var respMessage = document.getElementById("respMessage");
+            respMessage.value = "建立连接";
+        }
+
+
+        function sendMsg(msg) { //发送消息
+            if(window.WebSocket){
+                if(websocket.readyState == WebSocket.OPEN) { //如果WebSocket是打开状态
+                    websocket.send(msg); //send()发送消息
+                }
+            }else{
+                return;
+            }
+        }
+    </script>
+</head>
+<body>
+<form onsubmit="return false">
+    <textarea style="width: 300px; height: 200px;" name="message"></textarea>
+    <input type="button" onclick="sendMsg(this.form.message.value)" value="发送"><br>
+    <h3>信息</h3>
+    <textarea style="width: 300px; height: 200px;" id="respMessage"></textarea>
+    <input type="button" value="清空" onclick="javascript:document.getElementById('respMessage').value = ''">
+</form>
+</body>
+</html>
