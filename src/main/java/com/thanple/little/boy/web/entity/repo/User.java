@@ -5,11 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,6 +16,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(indexes = {@Index(name = "createTime_key",columnList = "createTime"),
+        @Index(name = "name_key",columnList = "name")})   //为createTime,name增加索引
 public class User implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

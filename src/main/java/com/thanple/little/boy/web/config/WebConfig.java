@@ -18,13 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Thanple on 2018/5/23.
  */
 @Configuration
-/**
- * ImportResource引入资源文件有三种方式：
- *     1.直接引入，该路径就是src/resources/下面的文件：file
- *     2.classpath引入：该路径就是src/java下面的配置文件：classpath:file
- *     3.引入本地文件：该路径是一种绝对路径：file:D://....
- */
-@ImportResource(locations = {"spring-context.xml"}) //这里引入自定义的bean
+@ImportResource(locations = {"classpath:spring-context.xml"}) //这里引入自定义的bean
 public class WebConfig {
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
