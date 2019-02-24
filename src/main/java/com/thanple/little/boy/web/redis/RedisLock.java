@@ -13,6 +13,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  * Created by Thanple on 2018/5/23.
  * Redis分布式锁
  */
+@Deprecated
 public class RedisLock {
     private static Logger logger = LoggerFactory.getLogger(RedisLock.class);
     private static final int DEFAULT_ACQUIRY_RESOLUTION_MILLIS = 10;
@@ -108,7 +109,7 @@ public class RedisLock {
     /**
      * 获得 lock.
      * 实现思路: 主要是使用了redis 的setnx命令,缓存了锁.
-     * reids缓存的key是锁的key,所有的共享, value是锁的到期时间(注意:这里把过期时间放在value了,没有时间上设置其超时时间)
+     * redis缓存的key是锁的key,所有的共享, value是锁的到期时间(注意:这里把过期时间放在value了,没有时间上设置其超时时间)
      * 执行过程:
      * 1.通过setnx尝试设置某个key的值,成功(当前没有这个锁)则返回,成功获得锁
      * 2.锁已经存在则获取锁的到期时间,和当前时间比较,超时的话,则设置新的值
