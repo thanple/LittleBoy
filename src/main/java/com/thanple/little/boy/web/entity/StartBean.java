@@ -32,6 +32,6 @@ public class StartBean {
 
     public void setInitAttr(String initAttr) {
         this.initAttr = initAttr;
-        log.info("Startbean set initAttr={}",initAttr);
+        log.info("· set initAttr={}",initAttr);
     }
 }

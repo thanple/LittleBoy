@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--scope="singleton"(默认就是单例方式)  -->
+    <bean id="a" class="com.thanple.little.boy.web.entity.circlereference.StudentA" scope="prototype">
+        <property name="studentB" ref="b"></property>
+    </bean>
+    <bean id="b" class="com.thanple.little.boy.web.entity.circlereference.StudentB" scope="prototype">
+        <property name="studentC" ref="c"></property>
+    </bean>
+    <bean id="c" class="com.thanple.little.boy.web.entity.circlereference.StudentC" scope="prototype">
+        <property name="studentA" ref="a"></property>
+    </bean>
+
+</beans>
